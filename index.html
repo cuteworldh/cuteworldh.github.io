@@ -1,6 +1,42 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>创建一个websocket客户端</h1>
+    <input type="text" id="ip" readonly>
+    <button id="connect">连接</button>
+    <div id="status">未连接</div>
+    <script>
+        $(document).ready(function() {
+            var ws;
+            $.get("https://v6.ident.me", function(data) {
+                $("#ip").val(data);
+            });
+            $("#connect").click(function() {
+                var ip = $("#ip").val();
+                var port = 8765;
+                var url = "ws://" + ip + ":" + port;
+                ws = new WebSocket(url);
+                ws.onopen = function() {
+                    $("#status").text("已连接");
+                };
+                ws.onclose = function() {
+                    $("#status").text("已断开");
+                };
+                ws.onmessage = function(event) {
+                    alert(event.data);
+                };
+            });
+        });
+    </script>
+</body>
 
+
+
+
+	
 <head>
 	<meta charset="utf-8">
 	<!--网站收录数据抓取-->
